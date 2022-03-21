@@ -20,7 +20,11 @@ mongoose.connect(DB)
 })
 
 
-
+function logger(req,res, next){
+    console.log(`calling ${req.method} to ${req.url}`);
+    next();
+    console.log(`calling ${req.method} to ${req.url} sucessfully`)
+}
 
 
 const port = process.env.PORT || 8000 ;
@@ -44,6 +48,13 @@ app.get('/tasks', (req, res) => {
     res.render('index')
 });
 
+
+app.post("/task", [logger,express.json()],(req,res)=>{
+    console.log("inside post/users")
+   
+    res.json(req.body);
+   
+})
 
 
 app.listen(port,()=>{
